@@ -85,15 +85,9 @@ const styles = theme => ({
         height: '100vh',
         overflow: 'auto',
     },
-    chartContainer: {
-        marginLeft: -22,
-    },
-    tableContainer: {
-        height: 320,
-    },
     h5: {
         marginBottom: theme.spacing.unit * 2,
-    },
+    }
 });
 
 class Dashboard extends React.Component {
