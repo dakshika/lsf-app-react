@@ -1,4 +1,4 @@
-import React from 'react';
+import React,  { Component } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -45,49 +45,94 @@ const styles = theme => ({
     },
 });
 
-function SignIn(props) {
-    const { classes } = props;
 
-    return (
-        <main className={classes.main}>
-            <CssBaseline />
-            <Paper className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <form className={classes.form}>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="email">Email Address</InputLabel>
-                        <Input id="email" name="email" autoComplete="email" autoFocus />
-                    </FormControl>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input name="password" type="password" id="password" autoComplete="current-password" />
-                    </FormControl>
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
+
+class Login extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isLogin: false,
+            username: '',
+            password: '',
+            validate: false
+        };
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.setState({ validate: true });
+        const { username, password } = this.state;
+
+        if (!username || !password) {
+            // Alert.error('Please fill both username and password fields');
+            return;
+        }
+
+        
+
+    };
+
+    handleInputChange = (event) => {
+        const { target } = event;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.id;
+
+        this.setState({
+            [name]: value,
+        });
+    };
+
+    render() {
+
+            const { classes } = this.props;
+
+            return (
+            <main className={classes.main}>
+                <CssBaseline/>
+                <Paper className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
                         Sign in
-                    </Button>
-                </form>
-            </Paper>
-        </main>
-    );
+                    </Typography>
+                    <form className={classes.form} onSubmit={this.handleSubmit}>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="email">Email Address</InputLabel>
+                            <Input id="email" name="email" autoComplete="email" autoFocus
+                                   onChange={this.handleInputChange}
+                            />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <Input name="password" type="password" id="password" autoComplete="current-password"
+                                   onChange={this.handleInputChange}
+                            />
+                        </FormControl>
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary"/>}
+                            label="Remember me"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign in
+                        </Button>
+                    </form>
+                </Paper>
+            </main>
+        );
+    }
 }
 
-SignIn.propTypes = {
+Login.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SignIn);
+export default withStyles(styles)(Login);
